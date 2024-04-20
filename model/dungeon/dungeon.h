@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <iostream>
+#include "../../nlohmann/json.hpp"
 #include "../../utils/utils.h"
 
 // Definimos una estructura para representar una celda en el calabozo
@@ -16,17 +18,17 @@ struct Cell {
 
 class Dungeon {
 private:
-    std::vector<std::vector<Cell>> floors;
-
+    std::vector<std::vector<std::vector<Cell>>> floors;
 public:
     Dungeon();  // Constructor
     ~Dungeon();  // Destructor
-
     void generateDungeon();  // Método para generar el calabozo
     void printDungeon();  // Método para imprimir el calabozo
-
-    void serialize(std::ostream& stream);
-
+    void printFloor(int floor, int characterX, int characterY, bool showAll);  // Metodo para imprimir un piso del calabozo
+    void serializeJSON(std::ostream& stream);
+    void fillData(const nlohmann::json& data);
+    void deserializeJSON(std::string jsonString);
+    int checkCell(int floor, int x, int y);
 };
 
 #endif // DUNGEON_H
